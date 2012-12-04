@@ -1,0 +1,65 @@
+{
+   "abstract" : "A searchable store backed by Solr",
+   "author" : [
+      "Patrick Hochstenbach <patrick.hochstenbach@ugent.be>",
+      "Nicolas Steenlant <nicolas.steenlant@ugent.be>"
+   ],
+   "dynamic_config" : 1,
+   "generated_by" : "Module::Build version 0.38, CPAN::Meta::Converter version 2.120921",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "Catmandu-Store-Solr",
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "Software::License" : "0",
+            "Test::Exception" : "0",
+            "Test::More" : "0"
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "Module::Build" : "0.38"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "CQL::Parser" : "1.12",
+            "Catmandu" : "0.03",
+            "Moo" : "1.00",
+            "WebService::Solr" : "0.16",
+            "perl" : "v5.10.1"
+         }
+      }
+   },
+   "provides" : {
+      "Catmandu::Store::Solr" : {
+         "file" : "lib/Catmandu/Store/Solr.pm",
+         "version" : "0.02"
+      },
+      "Catmandu::Store::Solr::Bag" : {
+         "file" : "lib/Catmandu/Store/Solr/Bag.pm",
+         "version" : 0
+      },
+      "Catmandu::Store::Solr::CQL" : {
+         "file" : "lib/Catmandu/Store/Solr/CQL.pm",
+         "version" : 0
+      },
+      "Catmandu::Store::Solr::Searcher" : {
+         "file" : "lib/Catmandu/Store/Solr/Searcher.pm",
+         "version" : 0
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "license" : [
+         "http://dev.perl.org/licenses/"
+      ]
+   },
+   "version" : "0.02"
+}
