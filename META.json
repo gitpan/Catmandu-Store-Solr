@@ -5,7 +5,7 @@
       "Nicolas Steenlant <nicolas.steenlant@ugent.be>"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "Module::Build version 0.38, CPAN::Meta::Converter version 2.120921",
+   "generated_by" : "Module::Build version 0.4003, CPAN::Meta::Converter version 2.120921",
    "license" : [
       "perl_5"
    ],
@@ -24,7 +24,7 @@
       },
       "configure" : {
          "requires" : {
-            "Module::Build" : "0.38"
+            "Module::Build" : "0.40"
          }
       },
       "runtime" : {
@@ -40,7 +40,7 @@
    "provides" : {
       "Catmandu::Store::Solr" : {
          "file" : "lib/Catmandu/Store/Solr.pm",
-         "version" : "0.02"
+         "version" : "0.0201"
       },
       "Catmandu::Store::Solr::Bag" : {
          "file" : "lib/Catmandu/Store/Solr/Bag.pm",
@@ -61,5 +61,5 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "0.02"
+   "version" : "0.0201"
 }
