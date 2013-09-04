@@ -30,7 +30,7 @@
       "runtime" : {
          "requires" : {
             "CQL::Parser" : "1.12",
-            "Catmandu" : "0.03",
+            "Catmandu" : "0.7",
             "Moo" : "1.00",
             "WebService::Solr" : "0.16",
             "perl" : "v5.10.1"
@@ -40,7 +40,7 @@
    "provides" : {
       "Catmandu::Store::Solr" : {
          "file" : "lib/Catmandu/Store/Solr.pm",
-         "version" : "0.0202"
+         "version" : "0.0203"
       },
       "Catmandu::Store::Solr::Bag" : {
          "file" : "lib/Catmandu/Store/Solr/Bag.pm",
@@ -61,5 +61,5 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "0.0202"
+   "version" : "0.0203"
 }

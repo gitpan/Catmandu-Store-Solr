@@ -7,7 +7,7 @@ WriteMakefile
   'VERSION_FROM' => 'lib/Catmandu/Store/Solr.pm',
   'PREREQ_PM' => {
                    'CQL::Parser' => '1.12',
-                   'Catmandu' => '0.03',
+                   'Catmandu' => '0.7',
                    'Moo' => '1.00',
                    'Software::License' => 0,
                    'Test::Exception' => 0,
