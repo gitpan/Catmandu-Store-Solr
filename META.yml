@@ -8,9 +8,9 @@ build_requires:
   Test::Exception: 0
   Test::More: 0
 configure_requires:
-  Module::Build: 0.40
+  Module::Build: 0.42
 dynamic_config: 1
-generated_by: 'Module::Build version 0.4003, CPAN::Meta::Converter version 2.120921'
+generated_by: 'Module::Build version 0.4203, CPAN::Meta::Converter version 2.133380'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -19,16 +19,13 @@ name: Catmandu-Store-Solr
 provides:
   Catmandu::Store::Solr:
     file: lib/Catmandu/Store/Solr.pm
-    version: 0.0203
+    version: 0.0204
   Catmandu::Store::Solr::Bag:
     file: lib/Catmandu/Store/Solr/Bag.pm
-    version: 0
   Catmandu::Store::Solr::CQL:
     file: lib/Catmandu/Store/Solr/CQL.pm
-    version: 0
   Catmandu::Store::Solr::Searcher:
     file: lib/Catmandu/Store/Solr/Searcher.pm
-    version: 0
 requires:
   CQL::Parser: 1.12
   Catmandu: 0.7
@@ -37,4 +34,4 @@ requires:
   perl: v5.10.1
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.0203
+version: 0.0204

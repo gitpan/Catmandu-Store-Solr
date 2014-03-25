@@ -14,15 +14,17 @@ with 'Catmandu::Buffer';
 
 sub generator {
     my ($self) = @_;
-    my $store = $self->store;
-    my $name  = $self->name;
-    my $limit = $self->buffer_size;
-    my $query = qq/_bag:"$name"/;
+    my $store  = $self->store;
+    my $name   = $self->name;
+    my $limit  = $self->buffer_size;
+    my $query  = qq/_bag:"$name"/;
     sub {
         state $start = 0;
         state $hits;
         unless ($hits && @$hits) {
-            $hits = $store->solr->search($query, {start => $start, rows => $limit})->content->{response}{docs};
+            $hits =
+              $store->solr->search($query, {start => $start, rows => $limit})
+              ->content->{response}{docs};
             $start += $limit;
         }
         my $hit = shift(@$hits) || return;
@@ -33,18 +35,32 @@ sub generator {
 
 sub count {
     my ($self) = @_;
-    my $name = $self->name;
-    my $res  = $self->store->solr->search(qq/_bag:"$name"/,
-            {rows => 0, facet => "false", spellcheck => "false"});
+    my $name   = $self->name;
+    my $res    = $self->store->solr->search(
+        qq/_bag:"$name"/,
+        {
+            rows       => 0,
+            facet      => "false",
+            spellcheck => "false",
+            defType    => "lucene",
+        }
+    );
     $res->content->{response}{numFound};
 }
 
 sub get {
     my ($self, $id) = @_;
     my $name = $self->name;
-    my $res  = $self->store->solr->search(qq/_bag:"$name" AND _id:"$id"/,
-        {rows => 1, facet => "false", spellcheck => "false"});
-    my $hit  = $res->content->{response}{docs}->[0] || return;
+    my $res  = $self->store->solr->search(
+        qq/_bag:"$name" AND _id:"$id"/,
+        {
+            rows       => 1,
+            facet      => "false",
+            spellcheck => "false",
+            defType    => "lucene",
+        }
+    );
+    my $hit = $res->content->{response}{docs}->[0] || return;
     delete $hit->{_bag};
     $hit;
 }
@@ -55,10 +71,14 @@ sub add {
     my @fields = (WebService::Solr::Field->new(_bag => $self->name));
 
     for my $key (keys %$data) {
+        next if $key eq '_bag';
         my $val = $data->{$key};
         if (is_array_ref($val)) {
-            is_value($_) && push @fields, WebService::Solr::Field->new($key => $_) foreach @$val;
-        } elsif (is_value($val)) {
+            is_value($_) && push @fields,
+              WebService::Solr::Field->new($key => $_)
+              foreach @$val;
+        }
+        elsif (is_value($val)) {
             push @fields, WebService::Solr::Field->new($key => $val);
         }
     }
@@ -93,10 +113,10 @@ sub commit { # TODO better error handling
     my $solr = $self->store->solr;
     my $err;
     if ($self->buffer_used) {
-        eval { $solr->add($self->buffer) } or push @{$err ||= []}, $@;
+        eval { $solr->add($self->buffer) } or push @{ $err ||= [] }, $@;
         $self->clear_buffer;
     }
-    eval { $solr->commit } or push @{$err ||= []}, $@;
+    eval { $solr->commit } or push @{ $err ||= [] }, $@;
     !defined $err, $err;
 }
 
@@ -110,10 +130,17 @@ sub search {
 
     my $name = $self->name;
 
-    if ($args{fq}) {
-        $args{fq} = qq/_bag:"$name" AND ($args{fq})/;
+    my $bag_fq = qq/_bag:"$name"/;
+
+    if ( $args{fq} ) {
+        if (is_array_ref( $args{fq})) {
+            unshift @{ $args{fq} }, $bag_fq;
+        }
+        else {
+            $args{fq} = [$bag_fq, $args{fq}];
+        }
     } else {
-        $args{fq} = qq/_bag:"$name"/;
+        $args{fq} = $bag_fq;
     }
 
     my $res = $self->store->solr->search($query, {%args, start => $start, rows => $limit});
@@ -135,6 +162,10 @@ sub search {
 
     if ($res->facet_counts) {
         $hits->{facets} = $res->facet_counts;
+    }
+
+    if ($res->spellcheck) {
+        $hits->{spellcheck} = $res->spellcheck;
     }
 
     $hits;
